@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../auth/AuthProvider";
 import { useNavigate } from "react-router-dom";
-
 
 export default function Login() {
   const { signup, signin, loginGoogle, loginGitHub } = useAuth();

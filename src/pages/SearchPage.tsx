@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { search } from "../api/search";
 import { Link, useSearchParams } from "react-router-dom";
-import { Line, CardSkeleton } from "../components/Skeleton";
+import { CardSkeleton } from "../components/Skeleton";
 
 export default function SearchPage() {
   const [params] = useSearchParams();

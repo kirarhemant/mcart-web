@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { suggest } from "../api/search";
 import { useNavigate } from "react-router-dom";
 

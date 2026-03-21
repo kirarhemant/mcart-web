@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Product } from "../api/catalog";
 import { search } from "../api/search";
-import { Line, CardSkeleton } from "../components/Skeleton";
+import { CardSkeleton } from "../components/Skeleton";
 import { Link, useSearchParams } from "react-router-dom";
 
 export default function ProductsPage() {
