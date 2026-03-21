@@ -28,7 +28,19 @@ export default function ProductPage() {
       <div>SKU: {item.sku}</div>
       <div>Price: ₹{item.price}</div>
       <div>Stock: {item.stock}</div>
-      <pre>{JSON.stringify(attrs, null, 2)}</pre>
+      <div style={{ marginTop: 12 }}>
+        <h4>Specifications</h4>
+        <table>
+          <tbody>
+            {Object.entries(attrs).map(([k, v]) => (
+              <tr key={k}>
+                <td style={{ padding: "4px 12px", fontWeight: 500 }}>{k}</td>
+                <td style={{ padding: "4px 12px" }}>{String(v)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <button className="btn primary" style={{ marginTop: 12 }}>
         Add to Cart
       </button>

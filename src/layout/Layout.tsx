@@ -15,13 +15,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <nav className="menu">
           <Link to="/">Home</Link>
           <div className="dropdown-parent">
-            <span onClick={() => nav("/catalog")}>Catalog</span>
+            <span onClick={() => nav("/catalog")}>Electronics</span>
             <div className="dropdown">
               <Link to="/catalog?cat=Mobiles">Mobiles</Link>
               <Link to="/catalog?cat=Laptops">Laptops</Link>
             </div>
           </div>
-          <Link to="/search">Search</Link>
+          <div className="dropdown-parent">
+            <span onClick={() => nav("/catalog")}>Apparel</span>
+            <div className="dropdown">
+              <Link to="/catalog?cat=Men">Men</Link>
+              <Link to="/catalog?cat=Women">Women</Link>
+            </div>
+          </div>
+          {/*<Link to="/search">Search</Link>*/}
         </nav>
         <SearchBar />
 
@@ -39,7 +46,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
           ) : (
-            <Link to="/login">Login / Sign up</Link>
+            <div style={{ display: "flex", gap: 12 }}>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </div>
           )}
         </div>
       </header>
@@ -47,9 +57,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className="app-main">{children}</main>
 
       <footer className="app-footer">
-        <div>© {new Date().getFullYear()} mcart — Demo</div>
+        <div>© {new Date().getFullYear()} mcart — demo for NAGP</div>
         <div>
-          <a href="https://github.com/kirarhemantGitHub" target="_blank">
+          <a href="https://github.com/kirarhemant" target="_blank">
             GitHub
           </a>
         </div>

@@ -13,11 +13,19 @@ export default function ProductsPage() {
   const [priceMin, setPriceMin] = useState<number | null>(null);
   const [priceMax, setPriceMax] = useState<number | null>(null);
   const [params] = useSearchParams();
+  const [page, setPage] = useState(0);
+  const size = 12;
+
+  useEffect(() => {
+    setPage(0);
+  }, [brands, priceMin, priceMax, categoryId]);
 
   useEffect(() => {
     const cat = params.get("cat");
     if (cat === "Mobiles") setCategory(3);
     if (cat === "Laptops") setCategory(4);
+    if (cat === "Men") setCategory(5);
+    if (cat === "Women") setCategory(6);
   }, [params]);
 
   useEffect(() => {
@@ -31,7 +39,7 @@ export default function ProductsPage() {
         categoryId === 6 ? "Women" :
         undefined;
 
-      const res = await search("", 0, 20, {
+      const res = await search("", page, size, {
         brand: brands,
         priceMin,
         priceMax,
@@ -56,7 +64,7 @@ export default function ProductsPage() {
         setLoading(false);
       }
     })();
-  }, [brands, priceMin, priceMax, categoryId]);
+  }, [brands, priceMin, priceMax, categoryId, page]);
 
   return (
     <div className="grid">
@@ -64,12 +72,13 @@ export default function ProductsPage() {
       {/* Sidebar */}
       <aside className="card">
         <h3>Filters</h3>
-        <div className="text-muted">Category ID:</div>
+        {/*<div className="text-muted">Category ID:</div>
+        
         <input
           type="number"
           value={categoryId}
           onChange={e => setCategory(parseInt(e.target.value || "0", 10))}
-        />
+        />*/}
 
         <div>Brand:</div>
         <label>
@@ -84,7 +93,7 @@ export default function ProductsPage() {
             }}
           /> Acme
         </label>
-
+        <br/>
         <label>
           <input
             type="checkbox"
@@ -97,6 +106,34 @@ export default function ProductsPage() {
             }}
           /> GigaTek
         </label>
+        <br/>
+        <label>
+          <input
+            type="checkbox"
+            onChange={e => {
+              if (e.target.checked) {
+                setBrands(prev => [...prev, "FabWear"]);
+              } else {
+                setBrands(prev => prev.filter(b => b !== "FabWear"));
+              }
+            }}
+          /> FabWear
+        </label>
+        <br/>
+        <label>
+          <input
+            type="checkbox"
+            onChange={e => {
+              if (e.target.checked) {
+                setBrands(prev => [...prev, "Nova"]);
+              } else {
+                setBrands(prev => prev.filter(b => b !== "Nova"));
+              }
+            }}
+          /> Nova
+        </label>
+        <br/>
+        <br/>
         <div>Price Min</div>
         <input type="number" onChange={e => setPriceMin(Number(e.target.value))} />
 
@@ -125,9 +162,9 @@ export default function ProductsPage() {
             No products found. Try another category.
           </div>
         ) : (
-          <div>
+          <div className="products-grid">
             {items.map(p => (
-              <div key={p.id} className="card" style={{ marginBottom: 12 }}>
+              <div key={p.id} className="card">
                 <h3>{p.name}</h3>
                 <div>₹{p.price}</div>
                 <div className="text-muted">Stock: {p.stock}</div>
@@ -136,6 +173,25 @@ export default function ProductsPage() {
             ))}
           </div>
         )}
+        <div style={{ marginTop: 16, display: "flex", gap: 12 }}>
+          <button
+            className="btn"
+            disabled={page === 0}
+            onClick={() => setPage(p => p - 1)}
+          >
+            Prev
+          </button>
+
+          <span>Page {page + 1}</span>
+
+          <button
+            className="btn"
+            disabled={items.length < size}
+            onClick={() => setPage(p => p + 1)}
+          >
+            Next
+          </button>
+        </div>
       </section>
     </div>
   );
