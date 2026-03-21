@@ -11,7 +11,7 @@ export default function AccountPage() {
   useEffect(()=>{(async()=>{
     try{
       // get existing from customer-api (soon) or fallback to identity
-      const { data } = await api.get("/api/customer/me").catch(()=>({data:null}));
+      const { data } = await api.get("/customer/me").catch(()=>({data:null}));
       setForm({
         name: data?.name ?? (user?.displayName ?? ""),
         email: data?.email ?? (user?.email ?? ""),
@@ -24,7 +24,7 @@ export default function AccountPage() {
   const save = async () => {
     setMsg(""); setLoading(true);
     try{
-      await api.post("/api/customer/me", form);
+      await api.post("/customer/me", form);
       setMsg("Saved!");
     } finally { setLoading(false); }
   };

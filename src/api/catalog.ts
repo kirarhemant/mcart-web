@@ -12,7 +12,7 @@ export type Product = {
 }*/
 
 export async function listProducts(categoryId: number, page=0, size=20, filters?: any) {
-  const { data } = await api.get(`/api/catalog/products`, {
+  const { data } = await api.get(`/catalog/products`, {
     params: {
       categoryId,
       page,
@@ -26,6 +26,6 @@ export async function listProducts(categoryId: number, page=0, size=20, filters?
 }
 
 export async function getProductBySku(sku: string) {
-  const { data } = await api.get(`/api/catalog/products/${encodeURIComponent(sku)}`);
+  const { data } = await api.get(`/catalog/products/${encodeURIComponent(sku)}`);
   return data as Product;
 }
