@@ -1,0 +1,49 @@
+name: Deploy Web (Cloud Run)
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    env:
+      PROJECT_ID: nagp-demo-487019
+      REGION: asia-south1
+      SERVICE: mcart-web
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          workload_identity_provider: projects/452946048375/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+          service_account: github-deployer@nagp-demo-487019.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${REGION}-docker.pkg.dev --quiet
+
+      - name: Build & Push
+        run: |
+          docker build -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/web-repo/${SERVICE}:${{ github.sha }} .
+          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/web-repo/${SERVICE}:${{ github.sha }}
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${SERVICE} \
+            --image ${REGION}-docker.pkg.dev/${PROJECT_ID}/web-repo/${SERVICE}:${{ github.sha }} \
+            --region ${REGION} \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8080
+
+      - name: Show URL
+        run: gcloud run services describe ${SERVICE} --region ${REGION} --format='value(status.url)'
