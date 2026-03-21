@@ -16,11 +16,15 @@ RUN rm /etc/nginx/conf.d/default.conf
 RUN printf 'server {\n\
   listen 8080;\n\
   server_name _;\n\
-  root /usr/share/nginx/html;\n\
-  index index.html;\n\
 \n\
   location / {\n\
+    root /usr/share/nginx/html;\n\
+    index index.html;\n\
     try_files $uri /index.html;\n\
+  }\n\
+\n\
+  location /api/ {\n\
+    proxy_pass http://34.111.146.234/api/;\n\
   }\n\
 }' > /etc/nginx/conf.d/default.conf
 
