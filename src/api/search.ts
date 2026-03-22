@@ -12,7 +12,7 @@ export async function search(q: string, page=0, size=20, filters?: any, sort?: s
       page,
       size,
       brand: filters?.brand,
-      categories: filters?.categories,
+      ...(filters?.categories ? { categories: filters.categories } : {}),
       priceMin: filters?.priceMin,
       priceMax: filters?.priceMax,
       sort

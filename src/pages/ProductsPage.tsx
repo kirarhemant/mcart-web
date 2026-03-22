@@ -18,10 +18,6 @@ export default function ProductsPage() {
   const [sort, setSort] = useState("relevance");
 
   useEffect(() => {
-    setPage(0);
-  }, [brands, priceMin, priceMax, categoryId]);
-
-  useEffect(() => {
     const cat = params.get("cat");
     if (cat === "Mobiles") setCategory(3);
     if (cat === "Laptops") setCategory(4);
@@ -85,9 +81,11 @@ export default function ProductsPage() {
         <label>
           <input
             type="checkbox"
+            checked={brands.includes("Acme")}
             onChange={e => {
               if (e.target.checked) {
                 setBrands(prev => [...prev, "Acme"]);
+                setPage(0);
               } else {
                 setBrands(prev => prev.filter(b => b !== "Acme"));
               }
@@ -98,9 +96,11 @@ export default function ProductsPage() {
         <label>
           <input
             type="checkbox"
+            checked={brands.includes("GigaTek")}
             onChange={e => {
               if (e.target.checked) {
                 setBrands(prev => [...prev, "GigaTek"]);
+                setPage(0);
               } else {
                 setBrands(prev => prev.filter(b => b !== "GigaTek"));
               }
@@ -111,9 +111,11 @@ export default function ProductsPage() {
         <label>
           <input
             type="checkbox"
+            checked={brands.includes("FabWear")}
             onChange={e => {
               if (e.target.checked) {
                 setBrands(prev => [...prev, "FabWear"]);
+                setPage(0);
               } else {
                 setBrands(prev => prev.filter(b => b !== "FabWear"));
               }
@@ -124,9 +126,11 @@ export default function ProductsPage() {
         <label>
           <input
             type="checkbox"
+            checked={brands.includes("Nova")}
             onChange={e => {
               if (e.target.checked) {
                 setBrands(prev => [...prev, "Nova"]);
+                setPage(0);
               } else {
                 setBrands(prev => prev.filter(b => b !== "Nova"));
               }
@@ -136,15 +140,61 @@ export default function ProductsPage() {
         <br/>
         <br/>
         <div>Price Min</div>
-        <input type="number" onChange={e => setPriceMin(Number(e.target.value))} />
+        <input type="number"
+        value={priceMin ?? ""}
+        onChange={e => {
+          setPriceMin(Number(e.target.value) || null);
+          setPage(0);
+          }} />
 
         <div>Price Max</div>
-        <input type="number" onChange={e => setPriceMax(Number(e.target.value))} />
+        <input type="number"
+        value={priceMax ?? ""}
+        onChange={e => {
+          setPriceMax(Number(e.target.value) || null);
+          setPage(0);
+        }} />
       </aside>
 
       {/* Main Content */}
       <section>
         <h2>Products</h2>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+
+        {brands.map(b => (
+          <div className="card" style={{ padding: "4px 8px" }}>
+            {b}
+            <span style={{ cursor: "pointer", marginLeft: 6 }}
+              onClick={() => setBrands(prev => prev.filter(x => x !== b))}
+            >
+              ❌
+            </span>
+          </div>
+        ))}
+
+        {priceMin && (
+          <div className="card" style={{ padding: "4px 8px" }}>
+            &gt; ₹{priceMin}
+            <span style={{ cursor: "pointer", marginLeft: 6 }}
+              onClick={() => setPriceMin(null)}
+            >
+              ❌
+            </span>
+          </div>
+        )}
+
+        {priceMax && (
+          <div className="card" style={{ padding: "4px 8px" }}>
+            &lt; ₹{priceMax}
+            <span style={{ cursor: "pointer", marginLeft: 6 }}
+              onClick={() => setPriceMax(null)}
+            >
+              ❌
+            </span>
+          </div>
+        )}
+
+      </div>
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
           <select value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value="relevance">Relevance</option>
