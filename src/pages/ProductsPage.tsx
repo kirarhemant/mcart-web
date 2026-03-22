@@ -2,28 +2,26 @@ import { useEffect, useState } from "react";
 import type { Product } from "../api/catalog";
 import { search } from "../api/search";
 import { CardSkeleton } from "../components/Skeleton";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function ProductsPage() {
   const [items, setItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
-  const [categoryId, setCategory] = useState<number>(3);
+  const [categoryId] = useState<number>(() => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    if (cat === "Mobiles") return 3;
+    if (cat === "Laptops") return 4;
+    if (cat === "Men") return 5;
+    if (cat === "Women") return 6;
+    return 3;
+  });
   const [error, setError] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
   const [priceMin, setPriceMin] = useState<number | null>(null);
   const [priceMax, setPriceMax] = useState<number | null>(null);
-  const [params] = useSearchParams();
   const [page, setPage] = useState(0);
   const size = 12;
   const [sort, setSort] = useState("relevance");
-
-  useEffect(() => {
-    const cat = params.get("cat");
-    if (cat === "Mobiles") setCategory(3);
-    if (cat === "Laptops") setCategory(4);
-    if (cat === "Men") setCategory(5);
-    if (cat === "Women") setCategory(6);
-  }, [params]);
 
   useEffect(() => {
     (async () => {
