@@ -15,6 +15,7 @@ export default function ProductsPage() {
   const [params] = useSearchParams();
   const [page, setPage] = useState(0);
   const size = 12;
+  const [sort, setSort] = useState("relevance");
 
   useEffect(() => {
     setPage(0);
@@ -44,7 +45,7 @@ export default function ProductsPage() {
         priceMin,
         priceMax,
         categories: categoryName ? [categoryName] : undefined
-      });
+      }, sort);
 
         const hits = res?.hits?.hits || [];
 
@@ -64,7 +65,7 @@ export default function ProductsPage() {
         setLoading(false);
       }
     })();
-  }, [brands, priceMin, priceMax, categoryId, page]);
+  }, [brands, priceMin, priceMax, categoryId, page, sort]);
 
   return (
     <div className="grid">
@@ -144,6 +145,13 @@ export default function ProductsPage() {
       {/* Main Content */}
       <section>
         <h2>Products</h2>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
+          <select value={sort} onChange={(e) => setSort(e.target.value)}>
+            <option value="relevance">Relevance</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+          </select>
+        </div>
 
         {error && (
           <div className="card" style={{ borderColor: "red" }}>

@@ -5,7 +5,7 @@ export async function suggest(q: string, size=5) {
   return data;
 }
 
-export async function search(q: string, page=0, size=20, filters?: any) {
+export async function search(q: string, page=0, size=20, filters?: any, sort?: string) {
   const { data } = await api.get(`/search`, {
     params: {
       q,
@@ -14,7 +14,8 @@ export async function search(q: string, page=0, size=20, filters?: any) {
       brand: filters?.brand,
       categories: filters?.categories,
       priceMin: filters?.priceMin,
-      priceMax: filters?.priceMax
+      priceMax: filters?.priceMax,
+      sort
     }
   });
   return data;

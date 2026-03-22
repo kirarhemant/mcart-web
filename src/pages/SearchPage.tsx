@@ -15,6 +15,7 @@ export default function SearchPage() {
   const [priceMax, setPriceMax] = useState<number | null>(null);
   const [page, setPage] = useState(0);
   const size = 12;
+  const [sort, setSort] = useState("relevance");
 
   useEffect(() => {
     setPage(0);
@@ -30,12 +31,12 @@ export default function SearchPage() {
         brand: brands,
         priceMin,
         priceMax
-      });
+      }, sort);
 
       setItems(res?.hits?.hits || []);
       setLoading(false);
     })();
-  }, [q, brands, priceMin, priceMax, page]);
+  }, [q, brands, priceMin, priceMax, page, sort]);
 
 return (
   <div className="grid">
@@ -109,6 +110,13 @@ return (
     {/* Main Content */}
     <section>
       <h2>Search results for "{q}"</h2>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
+        <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <option value="relevance">Relevance</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+        </select>
+      </div>
 
       {loading ? (
         Array.from({ length: 5 }).map((_, i) => <CardSkeleton key={i} />)
