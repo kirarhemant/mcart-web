@@ -86,3 +86,134 @@ body { margin:0; font-family: Inter, system-ui, Arial, sans-serif; color:#111; }
   transform: scale(1.03);
   transition: 0.2s;
 }
+
+.product-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-placeholder {
+  width: 250px;
+  height: 250px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  background: #fafafa;
+}
+
+.product-info .price {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.spec-table td {
+  padding: 6px 12px;
+}
+
+.input, input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  margin-top: 4px;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn:hover {
+  background: #f5f5f5;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn.primary:hover {
+  opacity: 0.9;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.auth-card {
+  max-width: 420px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.auth-social {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.divider {
+  margin: 12px 0;
+  color: var(--muted);
+}
+
+.search-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.search-bar input {
+  flex: 1;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.results-header select {
+  width: auto;
+  min-width: 180px;
+}
+
+.pdp-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.auth-card button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}

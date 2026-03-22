@@ -3,18 +3,19 @@ import type { Product } from "../api/catalog";
 import { search } from "../api/search";
 import { CardSkeleton } from "../components/Skeleton";
 import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export default function ProductsPage() {
   const [items, setItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
-  const [categoryId] = useState<number>(() => {
-    const cat = new URLSearchParams(window.location.search).get("cat");
-    if (cat === "Mobiles") return 3;
-    if (cat === "Laptops") return 4;
-    if (cat === "Men") return 5;
-    if (cat === "Women") return 6;
-    return 3;
-  });
+  const [params] = useSearchParams();
+  const cat = params.get("cat");
+  const categoryId =
+  cat === "Mobiles" ? 3 :
+  cat === "Laptops" ? 4 :
+  cat === "Men" ? 5 :
+  cat === "Women" ? 6 :
+  3;
   const [error, setError] = useState<string | null>(null);
   const [brands, setBrands] = useState<string[]>([]);
   const [priceMin, setPriceMin] = useState<number | null>(null);
@@ -79,6 +80,7 @@ export default function ProductsPage() {
         <label>
           <input
             type="checkbox"
+            style={{ width: "10%" }}
             checked={brands.includes("Acme")}
             onChange={e => {
               if (e.target.checked) {
@@ -94,6 +96,7 @@ export default function ProductsPage() {
         <label>
           <input
             type="checkbox"
+            style={{ width: "10%" }}
             checked={brands.includes("GigaTek")}
             onChange={e => {
               if (e.target.checked) {
@@ -109,6 +112,7 @@ export default function ProductsPage() {
         <label>
           <input
             type="checkbox"
+            style={{ width: "10%" }}
             checked={brands.includes("FabWear")}
             onChange={e => {
               if (e.target.checked) {
@@ -124,6 +128,7 @@ export default function ProductsPage() {
         <label>
           <input
             type="checkbox"
+            style={{ width: "10%" }}
             checked={brands.includes("Nova")}
             onChange={e => {
               if (e.target.checked) {
@@ -157,50 +162,50 @@ export default function ProductsPage() {
       {/* Main Content */}
       <section>
         <h2>Products</h2>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+        <div className="results-header">
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+            {brands.map(b => (
+              <div className="card" style={{ padding: "4px 8px" }}>
+                {b}
+                <span style={{ cursor: "pointer", marginLeft: 6 }}
+                  onClick={() => setBrands(prev => prev.filter(x => x !== b))}
+                >
+                  ❌
+                </span>
+              </div>
+            ))}
 
-        {brands.map(b => (
-          <div className="card" style={{ padding: "4px 8px" }}>
-            {b}
-            <span style={{ cursor: "pointer", marginLeft: 6 }}
-              onClick={() => setBrands(prev => prev.filter(x => x !== b))}
-            >
-              ❌
-            </span>
+            {priceMin && (
+              <div className="card" style={{ padding: "4px 8px" }}>
+                &gt; ₹{priceMin}
+                <span style={{ cursor: "pointer", marginLeft: 6 }}
+                  onClick={() => setPriceMin(null)}
+                >
+                  ❌
+                </span>
+              </div>
+            )}
+
+            {priceMax && (
+              <div className="card" style={{ padding: "4px 8px" }}>
+                &lt; ₹{priceMax}
+                <span style={{ cursor: "pointer", marginLeft: 6 }}
+                  onClick={() => setPriceMax(null)}
+                >
+                  ❌
+                </span>
+              </div>
+            )}
+
           </div>
-        ))}
-
-        {priceMin && (
-          <div className="card" style={{ padding: "4px 8px" }}>
-            &gt; ₹{priceMin}
-            <span style={{ cursor: "pointer", marginLeft: 6 }}
-              onClick={() => setPriceMin(null)}
-            >
-              ❌
-            </span>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
+            <select value={sort} onChange={(e) => setSort(e.target.value)}>
+              <option value="relevance">Relevance</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+            </select>
           </div>
-        )}
-
-        {priceMax && (
-          <div className="card" style={{ padding: "4px 8px" }}>
-            &lt; ₹{priceMax}
-            <span style={{ cursor: "pointer", marginLeft: 6 }}
-              onClick={() => setPriceMax(null)}
-            >
-              ❌
-            </span>
-          </div>
-        )}
-
-      </div>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 12 }}>
-          <select value={sort} onChange={(e) => setSort(e.target.value)}>
-            <option value="relevance">Relevance</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-          </select>
         </div>
-
         {error && (
           <div className="card" style={{ borderColor: "red" }}>
             Error: {error}

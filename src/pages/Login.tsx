@@ -9,22 +9,26 @@ export default function Login() {
   const nav = useNavigate();
   return (
     <div className="card" style={{ maxWidth: 400, margin: "auto" }}>
-      <h2>Sign in mcart</h2>
-      <button onClick={async () => {
+      <h2>🌐 Sign in to mcart</h2>
+
+      <button className="btn" onClick={async () => {
         await loginGoogle();
         nav("/");
       }}>Continue with Google</button>
-      <button onClick={async () => {
+
+      <button className="btn" onClick={async () => {
         await loginGitHub();
         nav("/");
       }} style={{ marginLeft: 12 }}>
         Continue with GitHub
       </button>
-      <br/>
-      <h2>OR</h2>
-      <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={e => setPass(e.target.value)} />
-      <button onClick={async () => {
+
+      <div className="divider">OR</div>
+      <h2>🔐 Log in to your account</h2>
+
+      <input className="input" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+      <input className="input" type="password" placeholder="Password" onChange={e => setPass(e.target.value)} />
+      <button className="btn primary" style={{ marginTop: "5px" }} onClick={async () => {
         await signin(email, pass);
         nav("/");
       }}>Login</button>

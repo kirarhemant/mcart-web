@@ -45,28 +45,30 @@ export default function SearchBar() {
 
   return (
     <div style={{ position: "relative" }}>
-      <input
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        placeholder="Search…"
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && q.trim()) {
+      <div className="search-bar">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search…"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && q.trim()) {
+              nav(`/search?q=${encodeURIComponent(q)}`);
+              setQ("");       // clear input
+              setItems([]);   // hide suggestions
+            }
+          }}
+        />
+        <button
+          onClick={() => {
+            if (!q.trim()) return;
             nav(`/search?q=${encodeURIComponent(q)}`);
-            setQ("");       // clear input
-            setItems([]);   // hide suggestions
-          }
-        }}
-      />
-      <button
-        onClick={() => {
-          if (!q.trim()) return;
-          nav(`/search?q=${encodeURIComponent(q)}`);
-          setQ("");
-          setItems([]);
-        }}
-      >
-        Search
-      </button>
+            setQ("");
+            setItems([]);
+          }}
+        >
+          Search
+        </button>
+      </div>
 
       {!!items.length && (
         <div style={{

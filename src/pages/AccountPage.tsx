@@ -7,6 +7,7 @@ export default function AccountPage() {
   const [form,setForm] = useState({ name:"", email:"", phone:"", address:"" });
   const [loading,setLoading] = useState(true);
   const [msg,setMsg] = useState("");
+  const [editing, setEditing] = useState(false);
 
   useEffect(()=>{(async()=>{
     try{
@@ -31,16 +32,52 @@ export default function AccountPage() {
 
   if(loading) return <div className="card">Loading account…</div>;
   return (
-    <div className="grid">
-      <aside className="card"><h3>My Account</h3></aside>
-      <section className="card">
-        <div><label>Name</label><input value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></div>
-        <div><label>Email</label><input value={form.email} disabled/></div>
-        <div><label>Phone</label><input value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/></div>
-        <div><label>Address</label><textarea value={form.address} onChange={e=>setForm({...form,address:e.target.value})}/></div>
-        <button className="btn primary" onClick={save}>Save</button>
-        {msg && <span style={{marginLeft:12}}>{msg}</span>}
-      </section>
-    </div>
+    <section className="card" style={{ marginLeft: "400px", marginRight: "400px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3>Profile</h3>
+        <button className="btn" onClick={() => setEditing(e => !e)}>
+          ✏️ {editing ? "Cancel" : "Edit"}
+        </button>
+      </div>
+      <div className="form-group">
+        <label>Name</label>
+        <input
+          value={form.name}
+          disabled={!editing}
+          onChange={e => setForm({ ...form, name: e.target.value })}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Email</label>
+        <input value={form.email} disabled />
+      </div>
+
+      <div className="form-group">
+        <label>Phone</label>
+        <input
+          value={form.phone}
+          disabled={!editing}
+          onChange={e => setForm({ ...form, phone: e.target.value })}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Address</label>
+        <textarea
+          value={form.address}
+          disabled={!editing}
+          onChange={e => setForm({ ...form, address: e.target.value })}
+        />
+      </div>
+
+      {editing && (
+        <button className="btn primary" onClick={save}>
+          Save
+        </button>
+      )}
+
+      {msg && <span style={{ marginLeft: 12 }}>{msg}</span>}
+    </section>
   );
 }
