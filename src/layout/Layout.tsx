@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider";
 import SearchBar from "../components/SearchBar";
+import mcartLogo from '../assets/mcart-logo.png'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
@@ -10,7 +11,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="app">
       <header className="app-header">
-        <div className="brand"><Link to="/">mcart</Link></div>
+        {/*<div className="brand"><Link to="/">mcart</Link></div>*/}
+        <div className="brand">
+          <img src={mcartLogo} width="108" height="43" alt="mcart - demo for NAGP" />
+        </div>
 
         <nav className="menu">
           <Link to="/">Home</Link>
