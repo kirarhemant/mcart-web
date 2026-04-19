@@ -50,6 +50,7 @@ export default function ProductsPage() {
           name: h._source.name,
           price: h._source.price,
           stock: h._source.stock,
+          image: h._source.image,
         }));
 
         setItems(mapped);
@@ -226,6 +227,11 @@ export default function ProductsPage() {
           <div className="products-grid">
             {items.map(p => (
               <div key={p.id} className="card">
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  className="product-img"
+                />
                 <h3>{p.name}</h3>
                 <div>₹{p.price}</div>
                 <div className="text-muted">Stock: {p.stock}</div>

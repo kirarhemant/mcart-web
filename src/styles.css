@@ -217,3 +217,44 @@ input:focus, textarea:focus {
   border-radius: 10px;
   padding: 16px;
 }
+
+.product-img {
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+/* Force PDP image container to be a normal block */
+.pdp-wrapper .product-image {
+  display: block !important;   /* override any global flex/grid */
+  text-align: center;
+}
+
+/* Ensure the main image behaves as a block */
+.pdp-wrapper .pdp-img {
+  display: block;
+  margin: 0 auto;             /* center horizontally */
+}
+
+/* Thumbnails row below the main image – only inside PDP */
+.pdp-wrapper .thumbs {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* Thumbnail images (already scoped by .thumbs) */
+.pdp-wrapper .thumbs img {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 2px solid transparent;
+}
+
+.pdp-wrapper .thumbs img.active {
+  border-color: #0a66c2;
+}

@@ -4,6 +4,7 @@ export type Product = {
   id: number; sku: string; name: string;
   price: number; stock: number; categoryId: number;
   attributes?: string; updatedAt?: string;
+  image: string; images?: string;
 };
 
 /*export async function listProducts(categoryId: number, page=0, size=20) {

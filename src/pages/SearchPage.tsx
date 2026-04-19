@@ -216,6 +216,11 @@ return (
         <div className="products-grid">
           {items.map((h, i) => (
             <div key={i} className="card">
+              <img
+                src={h._source.image}
+                alt={h._source.name}
+                className="product-img"
+              />
               <h3>{h._source.name}</h3>
               <div>{h._source.brand}</div>
               <div>₹{h._source.price}</div>

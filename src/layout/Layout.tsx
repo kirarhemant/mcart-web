@@ -12,9 +12,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="app">
       <header className="app-header">
         {/*<div className="brand"><Link to="/">mcart</Link></div>*/}
-        <div className="brand">
-          <img src={mcartLogo} width="108" height="43" alt="mcart - demo for NAGP" />
-        </div>
+        <Link to="/">
+          <div className="brand">
+            <img src={mcartLogo} width="108" height="43" alt="mcart - demo for NAGP" />
+          </div>
+        </Link>
 
         <nav className="menu">
           <Link to="/">Home</Link>
