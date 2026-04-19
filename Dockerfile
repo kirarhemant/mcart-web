@@ -24,7 +24,7 @@ RUN printf 'server {\n\
   }\n\
 \n\
   location /api/ {\n\
-    proxy_pass http://34.49.96.9/api/;\n\
+    proxy_pass http://35.241.62.16/api/;\n\
   }\n\
 }' > /etc/nginx/conf.d/default.conf
 
