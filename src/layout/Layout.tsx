@@ -34,7 +34,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link to="/catalog?cat=Women">Women</Link>
             </div>
           </div>
-          <div>random</div>
           {/*<Link to="/search">Search</Link>*/}
         </nav>
         <SearchBar />
