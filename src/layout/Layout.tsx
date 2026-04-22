@@ -34,6 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link to="/catalog?cat=Women">Women</Link>
             </div>
           </div>
+          <div>NAGP DEMO baa599b5</div>
           {/*<Link to="/search">Search</Link>*/}
         </nav>
         <SearchBar />
